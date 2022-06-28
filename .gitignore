@@ -1,5 +1,6 @@
 # IntelliJ
-out/production/Stacks
+out/
+.idea/
 *.class
 *workspace.xml
 .idea/**/workspace.xml
