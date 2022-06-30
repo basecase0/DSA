@@ -3,6 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="c50d6e7c-5a7e-4858-b785-049df637ddcd" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/LargestAreaHistogram.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/LargestAreaHistogram.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../hihih.txt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,7 +26,8 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true"
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "settings.editor.selected.configurable": "editor.preferences.tabs"
   }
 }]]></component>
   <component name="RunManager" selected="Application.BalancedBrackets">
