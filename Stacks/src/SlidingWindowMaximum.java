@@ -16,27 +16,31 @@ public class SlidingWindowMaximum{
 
         // code
         Stack<Integer>st=new Stack<>();
-        int swmax[]=new int[n];
-        //ngetr[n-1]=-1;
-        st.push(n-1);
-        for(int i=0;i<n-3;i++){
-            int j=i;
-            while(st.size()>0&&a[i]>a[st.peek()]){
+        int nge[]=new int[n];
+        st.push(n-1);          //  n - array length
+        nge[n-1]=n;
+        for(int i=n-2;i>=0;i--){
+            while(st.size()>0&&a[i]>=a[st.peek()]){
                 st.pop();
             }
             if(st.size()==0){
-                j=-1;
+                nge[i]=n;
             }
             else{
-                j=a[st.peek()];
+                nge[i]=st.peek();
             }
-            if(st.peek()>i+k-1){
-                swmax[i]=a[i];
-            }
-            else{
-
-            }
-            st.push(a[i]);
+            st.push(i);
         }
+        int j=0;
+        for(int i=0;i<=n-k;i++){
+            if(j<i){
+                j=i;
+            }
+            while(nge[j]<i+k){
+                j=nge[j];
+            }
+            System.out.println(a[j]);
+        }
+
     }
 }
