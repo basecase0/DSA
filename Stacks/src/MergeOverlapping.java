@@ -21,24 +21,49 @@ public class MergeOverlapping {
     public static void mergeOverlappingIntervals(int[][] arr) {
         int n=arr.length;
         // merge overlapping intervals and print in increasing order of start time
+        Pair []pairs=new Pair[n];
         for(int i=0;i<n;i++){
-            int max=i;
-            for(int j=i+1;j<n;j++){
-                if(arr[j][0]<arr[max][0]){
-                    max=j;
+            pairs[i]=new Pair(arr[i][0],arr[i][1]);
+        }
+        Arrays.sort(pairs);
+        Stack<Pair>st=new Stack<>();
+        for(int i=0;i<pairs.length;i++){
+            if(i==0){
+                st.push(pairs[i]);
+            }
+            else{
+                Pair top=st.peek();
+                if(pairs[i].st>top.et){
+                    st.push(pairs[i]);
+                }
+                else{
+                    top.et=Math.max(top.et,pairs[i].et);
                 }
             }
-            int temp=arr[i][0];
-            arr[i][0]=arr[max][0];
-            arr[max][0]=temp;
-            int temp1=arr[i][1];
-            arr[i][1]=arr[max][1];
-            arr[max][1]=temp1;
         }
-        Stack<Integer>merge=new Stack<>();
-        for(int i=0;i<n;i++){
-
+        Stack<Pair>rs=new Stack<>();
+        while(st.size()>0){
+            rs.push(st.pop());
+        }
+        while (rs.size()>0){
+            Pair p=rs.pop();
+            System.out.println(p.st+" "+p.et);
         }
     }
-
+    public static class Pair implements Comparable<Pair> {
+        int st;
+        int et;
+        Pair(int st,int et){
+            this.st=st;
+            this.et=et;
+        }
+        public int compareTo(Pair other){
+            if(this.st!=other.st){
+                return this.st-other.st;
+            }
+            else{
+                return this.et-other.et;
+            }
+        }
+    }
 }
