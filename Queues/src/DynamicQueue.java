@@ -33,7 +33,7 @@ public class DynamicQueue {
             if(size==data.length){
                 //System.out.println("Queue overflow");
                 // Dynamic
-                int ndata[]=new int[2+data.length];
+                int ndata[]=new int[2*data.length];
                 for(int i=0;i<size;i++){
                     int idx=(front+i)%data.length;
                     ndata[i]=data[idx];
