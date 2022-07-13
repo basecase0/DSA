@@ -20,8 +20,8 @@ public class AddLastLL {
                 head=tail=temp;   //  head,tail has reference of first node.
             }
             else{
-                tail.next=temp;
-                tail=temp;
+                tail.next=temp;   // adds at last
+                tail=temp;       // temp node becomes tail.
             }
             size++;
         }
