@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class AddAtIndex {
+public class ReversePointeriterative {
     public static class Node {
         int data;
         Node next;
@@ -90,33 +90,119 @@ public class AddAtIndex {
             temp.next = head;
             head = temp;
 
-            if(size == 0){
+            if (size == 0) {
                 tail = temp;
             }
+
             size++;
         }
 
-        public void addAt(int idx, int val){
-            if(idx==0){
-                addFirst(val);
-            }
-            else if(size==idx){
-                addLast(val);
-            }
-            else if(idx<0||idx>size){
+        public void addAt(int idx, int val) {
+            if (idx < 0 || idx > size) {
                 System.out.println("Invalid arguments");
-            }
-            else{
-                Node node=new Node();
-                node.data=val;   // data set
-                Node temp=head;
-                for(int i=0;i<idx-1;i++){
-                    temp=temp.next;
+            } else if (idx == 0) {
+                addFirst(val);
+            } else if (idx == size) {
+                addLast(val);
+            } else {
+                Node node = new Node();
+                node.data = val;
+
+                Node temp = head;
+                for (int i = 0; i < idx - 1; i++) {
+                    temp = temp.next;
                 }
-                node.next=temp.next;   // next node set.
-                temp.next=node;
+                node.next = temp.next;
+
+                temp.next = node;
                 size++;
             }
+        }
+
+        public void removeLast() {
+            if (size == 0) {
+                System.out.println("List is empty");
+            } else if (size == 1) {
+                head = tail = null;
+                size = 0;
+            } else {
+                Node temp = head;
+                for (int i = 0; i < size - 2; i++) {
+                    temp = temp.next;
+                }
+
+                tail = temp;
+                tail.next = null;
+                size--;
+            }
+        }
+
+        public void removeAt(int idx) {
+            if (idx < 0 || idx >= size) {
+                System.out.println("Invalid arguments");
+            } else if (idx == 0) {
+                removeFirst();
+            } else if (idx == size - 1) {
+                removeLast();
+            } else {
+                Node temp = head;
+                for (int i = 0; i < idx - 1; i++) {
+                    temp = temp.next;
+                }
+
+                temp.next = temp.next.next;
+                size--;
+            }
+        }
+
+        private Node getNodeAt(int idx) {
+            Node temp = head;
+            for (int i = 0; i < idx; i++) {
+                temp = temp.next;
+            }
+            return temp;
+        }
+
+        public void reverseDI() {
+            int li = 0;
+            int ri = size - 1;
+            while(li < ri){
+                Node left = getNodeAt(li);
+                Node right = getNodeAt(ri);
+
+                int temp = left.data;
+                left.data = right.data;
+                right.data = temp;
+
+                li++;
+                ri--;
+            }
+        }
+
+        public void reversePI(){
+         // Approach 1 (by myself)
+//            for(int i=size-2;i>=0;i--){
+//                Node temp=getNodeAt(i);
+//                Node temp2=getNodeAt(i+1);
+//                temp2.next=temp;
+//            }
+//            head.next=null;
+//            Node node=head;   // head and tail swap
+//            head=tail;
+//            tail=node;
+
+            // Solution
+            Node prev=null;
+            Node cur=head;
+            while(cur!=null){
+                Node next=cur.next;
+                cur.next=prev;
+                prev=cur;
+                cur=next;
+            }
+            Node node=head;   // head and tail swap
+            head=tail;
+            tail=node;
         }
     }
 
@@ -158,6 +244,15 @@ public class AddAtIndex {
                 int idx = Integer.parseInt(str.split(" ")[1]);
                 int val = Integer.parseInt(str.split(" ")[2]);
                 list.addAt(idx, val);
+            } else if (str.startsWith("removeLast")) {
+                list.removeLast();
+            } else if (str.startsWith("removeAt")) {
+                int idx = Integer.parseInt(str.split(" ")[1]);
+                list.removeAt(idx);
+            } else if(str.startsWith("reverseDI")){
+                list.reverseDI();
+            } else if(str.startsWith("reversePI")){
+                list.reversePI();
             }
             str = br.readLine();
         }
