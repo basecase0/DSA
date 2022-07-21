@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class Merge2SortedLL {
+public class DisplayReverseLLRecursiveAndData {
     public static class Node {
         int data;
         Node next;
@@ -12,7 +12,7 @@ public class Merge2SortedLL {
         Node tail;
         int size;
 
-        public void addLast(int val) {
+        void addLast(int val) {
             Node temp = new Node();
             temp.data = val;
             temp.next = null;
@@ -23,7 +23,6 @@ public class Merge2SortedLL {
                 tail.next = temp;
                 tail = temp;
             }
-
             size++;
         }
 
@@ -205,7 +204,7 @@ public class Merge2SortedLL {
             for (int i = 0; i < k; i++) {
                 fast = fast.next;
             }
-            // slow and fast now have a gap of 'k'.
+
             while (fast != tail) {
                 slow = slow.next;
                 fast = fast.next;
@@ -217,36 +216,185 @@ public class Merge2SortedLL {
         public int mid() {
             Node f = head;
             Node s = head;
+
             while (f.next != null && f.next.next != null) {
                 f = f.next.next;
                 s = s.next;
             }
+
             return s.data;
         }
 
         public static LinkedList mergeTwoSortedLists(LinkedList l1, LinkedList l2) {
-            LinkedList ans=new LinkedList();
-            Node h1=l1.head;
-            Node h2=l2.head;
-            while(h1!=null&&h2!=null){
-                if(h1.data<h2.data){
-                    ans.addLast(h1.data);
-                    h1=h1.next;
+            LinkedList ml = new LinkedList();
+
+            Node one = l1.head;
+            Node two = l2.head;
+            while (one != null && two != null) {
+                if (one.data < two.data) {
+                    ml.addLast(one.data);
+                    one = one.next;
+                } else {
+                    ml.addLast(two.data);
+                    two = two.next;
                 }
-                else{
-                    ans.addLast(h2.data);
-                    h2=h2.next;
+            }
+
+            while (one != null) {
+                ml.addLast(one.data);
+                one = one.next;
+            }
+
+            while (two != null) {
+                ml.addLast(two.data);
+                two = two.next;
+            }
+
+            return ml;
+        }
+
+        public static Node midNode(Node head, Node tail) {
+            Node f = head;
+            Node s = head;
+
+            while (f != tail && f.next != tail) {
+                f = f.next.next;
+                s = s.next;
+            }
+
+            return s;
+        }
+
+        public static LinkedList mergeSort(Node head, Node tail) {
+            if (head == tail) {
+                LinkedList br = new LinkedList();
+                br.addLast(head.data);
+                return br;
+            }
+
+            Node mid = midNode(head, tail);
+            LinkedList fsh = mergeSort(head, mid);  // first sorted half
+            LinkedList ssh = mergeSort(mid.next, tail);
+            LinkedList sl = mergeTwoSortedLists(fsh, ssh);
+            return sl;
+        }
+
+        public void removeDuplicates() {
+            LinkedList res = new LinkedList();
+
+            while (this.size() > 0) {
+                int val = this.getFirst();
+                this.removeFirst();
+
+                if (res.size() == 0 || val != res.tail.data) {
+                    res.addLast(val);
                 }
             }
-            while(h1!=null){
-                ans.addLast(h1.data);
-                h1=h1.next;
+
+            this.head = res.head;
+            this.tail = res.tail;
+            this.size = res.size;
+        }
+
+        public void oddEven() {
+            LinkedList odd = new LinkedList();
+            LinkedList even = new LinkedList();
+
+            while (this.size > 0) {
+                int val = this.getFirst();
+                this.removeFirst();
+
+                if (val % 2 == 0) {
+                    even.addLast(val);
+                } else {
+                    odd.addLast(val);
+                }
             }
-            while(h2!=null){
-                ans.addLast(h2.data);
-                h2=h2.next;
+
+            if (odd.size > 0 && even.size > 0) {
+                odd.tail.next = even.head;
+
+                this.head = odd.head;
+                this.tail = even.tail;
+                this.size = odd.size + even.size;
+            } else if (odd.size > 0) {
+                this.head = odd.head;
+                this.tail = odd.tail;
+                this.size = odd.size;
+            } else if (even.size > 0) {
+                this.head = even.head;
+                this.tail = even.tail;
+                this.size = even.size;
             }
-            return ans;
+        }
+
+        public void kReverse(int k) {
+            LinkedList prev = null;
+
+            while (this.size > 0) {
+                LinkedList curr = new LinkedList();
+
+                if (this.size >= k) {
+                    for (int i = 0; i < k; i++) {
+                        int val = this.getFirst();
+                        this.removeFirst();
+                        curr.addFirst(val);
+                    }
+                } else {
+                    int sz = this.size;
+                    for (int i = 0; i < sz; i++) {
+                        int val = this.getFirst();
+                        this.removeFirst();
+                        curr.addLast(val);
+                    }
+                }
+
+                if (prev == null) {
+                    prev = curr;
+                } else {
+                    prev.tail.next = curr.head;
+                    prev.tail = curr.tail;
+                    prev.size += curr.size;
+                }
+            }
+
+            this.head = prev.head;
+            this.tail = prev.tail;
+            this.size = prev.size;
+        }
+
+        private void displayReverseHelper(Node node){
+            if(node==null){   // base case
+                return;
+            }
+            else{
+                displayReverseHelper(node.next);
+                System.out.print(node.data+" ");
+            }
+        }
+
+        public void displayReverse(){
+            displayReverseHelper(head);
+            System.out.println();
+        }
+
+        public void ReverseDataHelper(Node right,int floor){
+            if(right==null){
+                return;
+            }
+            ReverseDataHelper(right.next,floor+1);
+
+            if(floor>=size/2){
+                int temp=right.data;
+                right.data=left.data;
+                left.data=temp;
+                left=left.next;   // moves forward, right moves backwards falling from recursion stack.
+            }
+        }
+        Node left;   // global
+        public void ReverseDataSwap(){
+            left=head;
+            ReverseDataHelper(head,0);
         }
     }
 
@@ -261,17 +409,17 @@ public class Merge2SortedLL {
             l1.addLast(d);
         }
 
-        int n2 = Integer.parseInt(br.readLine());
-        LinkedList l2 = new LinkedList();
-        String[] values2 = br.readLine().split(" ");
-        for (int i = 0; i < n2; i++) {
-            int d = Integer.parseInt(values2[i]);
-            l2.addLast(d);
-        }
+        int a = Integer.parseInt(br.readLine());
+        int b = Integer.parseInt(br.readLine());
 
-        LinkedList merged = LinkedList.mergeTwoSortedLists(l1, l2);
-        merged.display();
         l1.display();
-        l2.display();
+        l1.displayReverse();
+
+        //l1.ReverseDataSwap();  //--->  Data recursive swap
+        //l1.display();
+        l1.addLast(a);
+        l1.addFirst(b);
+        l1.display();
+
     }
 }
