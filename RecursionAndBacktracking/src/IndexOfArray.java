@@ -19,7 +19,20 @@ public class IndexOfArray {
             System.out.print(indicesarr[i]+" ");
         }
     }
-
+    // MAx of array
+    public static int maxOfArray(int[] arr, int idx){
+        if(idx==arr.length-1){
+            return arr[idx];
+        }
+        int max=maxOfArray(arr,idx+1);
+        if(arr[idx]>max){
+            return arr[idx];
+        }
+        else{
+            return max;
+        }
+    }
+    // First Index of x.
     public static int firstIndex(int arr[],int idx,int x){
         if(idx==arr.length){
             return -1;
@@ -32,7 +45,7 @@ public class IndexOfArray {
             return fiisa;
         }
     }
-
+    //Last Index of x.
     public static int LastIndex(int arr[],int idx,int x){
         if(idx==arr.length){
             return -1;
@@ -50,7 +63,7 @@ public class IndexOfArray {
             return liisa;
         }
     }
-
+    // All indices of x in array.
     public static int[] allIndices(int arr[],int x,int idx,int fsf){
         if(idx==arr.length){
             if(fsf==0){
