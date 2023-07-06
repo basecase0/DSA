@@ -2,14 +2,15 @@
 using namespace std;
 
 //  Definition for singly-linked list.
-  struct ListNode {
+struct ListNode {
     int val;
     ListNode *next;
     ListNode() : val(0), next(nullptr) {}
     ListNode(int x) : val(x), next(nullptr) {}
     ListNode(int x, ListNode *next) : val(x), next(next) {}
-  };
- 
+};
+
+// Solution 01- addFirstNode 
 class Solution01 {
 private: ListNode* ohead=NULL;
 private:
@@ -35,6 +36,7 @@ public:
     }
 };
 
+// Solution 2 reverse next pointer.
 class Solution {
 public:
     ListNode* reverseList(ListNode* head) {
