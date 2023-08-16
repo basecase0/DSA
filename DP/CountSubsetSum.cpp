@@ -1,6 +1,11 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+/*
+Given an array arr[] of non-negative integers and an integer sum, the task is to count all subsets of the given array with a sum equal to a given sum.
+
+Note: Answer can be very large, so, output answer modulo 109+7
+*/
 class Solution{
 
 	public:
