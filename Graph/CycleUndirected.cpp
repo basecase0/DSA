@@ -4,10 +4,10 @@ using namespace std;
 
 // } Driver Code Ends
 class Solution {
-    bool detect(int src,vector<int>& vis,vector<int> adj[]){
+    bool detect(int src,vector<int>& vis,vector<int> adj[]){    // BFS
         vis[src]=1;
         queue<pair<int,int>>q;
-        q.push({src,-1});
+        q.push({src,-1});   // {node,parent}
         
         while(!q.empty()){
             int node=q.front().first;
@@ -27,11 +27,25 @@ class Solution {
         }
         return false;
     }
+
+    bool dfsdetect(int node,int parent,vector<int>& vis,vector<int> adj[]){     // DFS
+        vis[node]=1;
+        
+        for(auto it: adj[node]){
+            
+            if(vis[it]){
+                if(it!=parent) return true;
+            }
+            else if(dfsdetect(it,node,vis,adj)==true){
+                return true;
+            }
+        }
+        return false;
+    }
     
   public:
     // Function to detect cycle in an undirected graph.
     bool isCycle(int V, vector<int> adj[]) {
-        // Code here
         vector<int>vis(V,0);
         
         for(int i=0;i<V;i++){
